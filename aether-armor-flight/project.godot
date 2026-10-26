@@ -1,0 +1,45 @@
+; Engine configuration file.
+; AETHER: ARMOR FLIGHT — native Godot 4 project.
+
+config_version=5
+
+[application]
+
+config/name="AETHER: ARMOR FLIGHT"
+run/main_scene="res://scenes/main/main.tscn"
+config/features=PackedStringArray("4.4", "GL Compatibility")
+config/description="An original powered-armor flight game for Android and desktop."
+
+[autoload]
+
+GameState="*res://scripts/systems/game_state.gd"
+SaveManager="*res://scripts/systems/save_manager.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/handheld/orientation=1
+window/stretch/mode="canvas_items"
+
+[input]
+
+[rendering]
+
+renderer/rendering_method="mobile"
+renderer/rendering_method.mobile="mobile"
+textures/default_filters/use_nearest_mipmap_filter=false
+environment/defaults/default_clear_color=Color(0.012, 0.025, 0.055, 1)
+
+[physics]
+
+3d/default_gravity=16.0
+3d/default_gravity_vector=Vector3(0, -1, 0)
+3d/physics_engine="GodotPhysics3D"
+common/physics_ticks_per_second=60
+
+[internationalization]
+
+locale/default="en"

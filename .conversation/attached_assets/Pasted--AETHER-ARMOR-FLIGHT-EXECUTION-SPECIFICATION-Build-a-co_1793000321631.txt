@@ -1,0 +1,417 @@
+# AETHER: ARMOR FLIGHT — EXECUTION SPECIFICATION
+## Build a complete, mobile-optimized, third-person powered-armor flight game for Android
+
+You are the implementation agent responsible for delivering this project. Do not respond with a proposal, roadmap, or high-level plan and stop. Inspect the references, create the project, implement the features, validate the code, and produce the deliverables.
+
+The target is a native Godot Android game. A browser mockup is not an acceptable substitute.
+
+# A. FIXED PROJECT REQUIREMENTS
+
+Project name: AETHER: ARMOR FLIGHT
+
+Engine: Godot 4.x, compatible with the installed local development version.
+
+Language: GDScript.
+
+Platform: Android phones, landscape orientation, APK distribution.
+
+Gameplay: Offline single-player, third-person flight, compact open city, boost, hover, repulsor combat, and flight challenges.
+
+Art direction:
+- Original red-and-gold futuristic powered armor.
+- Detailed helmet, layered torso plating, articulated arms and legs.
+- Cyan chest reactor, palm emitters, and boot/back thrusters.
+- Metallic materials with controlled reflections.
+- Bright blue energy effects.
+- Cinematic third-person camera.
+- Visually rich city using efficient mobile geometry and materials.
+
+Do not use Marvel logos, trademarked game branding, extracted commercial game assets, or unlicensed copyrighted character models. Build an original armor design that uses the general powered-armor aesthetic.
+
+The result must be a real, runnable Godot project that can be exported locally as an Android APK.
+
+# B. REQUIRED GITHUB REFERENCES
+
+Inspect the following exact repositories before implementation.
+
+## 1. Official Godot examples
+
+https://github.com/godotengine/godot-demo-projects
+
+Purpose:
+- Learn correct Godot project organization.
+- Check official scene and input patterns.
+- Reuse relevant engine examples where appropriate.
+
+## 2. Third-person controller and camera reference
+
+https://github.com/gdquest-demos/godot-4-3d-third-person-controller
+
+Purpose:
+- Study character-controller structure.
+- Study camera and aiming behavior.
+- Reuse compatible source-code patterns only.
+
+License restriction:
+The repository distinguishes MIT-licensed source code from CC-BY-NC-SA 4.0 art assets. Do not include its noncommercial art assets in a commercial release. Use original or appropriately licensed art.
+
+## 3. Godot 4 touchscreen controller
+
+https://github.com/selgesel/godot4-third-person-controller
+
+Purpose:
+- Study multitouch gestures.
+- Study touchscreen movement and camera control.
+- Adapt the useful input patterns to flight.
+
+The repository describes swimming and third-person movement, not a powered-armor flight system. Implement the actual flight physics independently.
+
+## 4. Android-oriented third-person project
+
+https://github.com/emanuelbertey/third-person-Godot-4
+
+Purpose:
+- Inspect its touchscreen, Android, settings, and save-system organization.
+- Reuse only components that are compatible, correctly licensed, and genuinely useful.
+
+## 5. Open-source armor asset lead
+
+https://github.com/xt688077/iron-man-atlas
+
+Purpose:
+- Inspect the model-loading implementation and documented armor component structure.
+- Investigate whether its GLB can legally be used.
+
+CRITICAL LICENSE RULE:
+The viewer source code being MIT-licensed does not automatically make the embedded Iron Man model MIT-licensed. The repository documents an original third-party model with separate ownership. Do not redistribute or bundle that model without permission covering our intended use.
+
+## 6. General asset discovery
+
+https://github.com/holokat/game-assets
+
+Inspect for suitable armor assets only after verifying the actual model files and their licenses. Do not assume a collection's code license covers every bundled asset.
+
+## Reference integration rules
+
+For each repository:
+1. Inspect README, license, source structure, version compatibility, and relevant files.
+2. Identify exactly what will be reused.
+3. Prefer adapting small, relevant code components over copying entire projects.
+4. Do not combine multiple complete projects into an incoherent codebase.
+5. Record source URLs, asset creators, license types, and attribution requirements in REFERENCES.md.
+6. If an asset license cannot be verified, do not bundle it.
+7. If a repository is unavailable or unsuitable, continue with an independent implementation rather than stopping.
+
+# C. PROJECT ARCHITECTURE
+
+Create a maintainable project with the following organization, adapting names where required by Godot conventions:
+
+project.godot
+
+scenes/
+  main/
+  player/
+  city/
+  combat/
+  challenges/
+  ui/
+
+scripts/
+  player/flight_controller.gd
+  player/armor_state.gd
+  camera/third_person_camera.gd
+  input/mobile_controls.gd
+  combat/repulsor_controller.gd
+  combat/target_manager.gd
+  world/city_manager.gd
+  challenges/challenge_manager.gd
+  ui/hud_controller.gd
+  systems/game_state.gd
+  systems/save_manager.gd
+
+assets/
+  armor/
+  animations/
+  city/
+  materials/
+  effects/
+  audio/
+
+tests/
+README.md
+REFERENCES.md
+LICENSES.md
+
+Use native Godot scenes, GDScript, signals, resources, and input actions. Keep systems modular, but avoid creating unnecessary abstractions.
+
+# D. ARMOR CHARACTER — HIGH PRIORITY
+
+Build a visually recognizable original armored character. Do not leave the final deliverable as a collection of primitive cubes.
+
+Required visual details:
+- Distinctive helmet and faceplate.
+- Layered chest, abdomen, shoulder, arm, and leg plating.
+- Articulated mechanical joints.
+- Cyan chest reactor.
+- Circular palm repulsor emitters.
+- Boot and back thrusters.
+- Metallic red-and-gold material separation.
+- Emissive cyan components.
+- Consistent proportions and silhouette.
+- Appropriate flight and combat poses.
+
+Preferred asset workflow:
+1. Search for a suitable legally reusable rigged model.
+2. If none is suitable, generate or model an original armor asset.
+3. Refine the geometry, materials, proportions, and joints in Blender or an equivalent 3D tool.
+4. Export as GLB/glTF with textures and skeleton where supported.
+5. Import into Godot.
+6. Verify scale, facing direction, material assignments, animation playback, and mobile rendering.
+
+If automated 3D generation is unavailable, build a detailed modular character using meshes and procedural geometry, with clearly separated armor panels, custom materials, reactor geometry, palms, and thrusters. Treat this as a replaceable prototype, not as proof that a final high-quality character model exists.
+
+Do not invent downloadable model URLs or claim a model has been generated when it has not.
+
+# E. CHARACTER RIG AND ANIMATIONS
+
+The armor must support:
+- Idle/standing.
+- Takeoff.
+- Hover.
+- Forward flight.
+- Banking turns.
+- Boost.
+- Ascend and descend.
+- Repulsor aiming and firing.
+- Landing.
+- Collision recovery.
+
+Use a suitable imported skeleton and animation clips where available. Procedural poses and thruster effects can supplement missing animations.
+
+The flight controller must not depend on the character mesh's internal structure. A replacement model should work without rewriting flight logic.
+
+# F. FLIGHT PHYSICS
+
+Implement a collision-aware, tunable flight system.
+
+Required behavior:
+- Grounded state and takeoff.
+- Stable hover.
+- Forward/backward and lateral movement.
+- Vertical thrust.
+- Acceleration and deceleration.
+- Maximum speed.
+- Air drag.
+- Boost with energy consumption and regeneration.
+- Smooth turning and controlled banking.
+- Collision response near buildings.
+- Landing.
+- Safe recovery if stuck.
+
+Use a consistent physics timestep and frame-rate-independent calculations.
+
+Use CharacterBody3D and collision-aware movement for the first implementation unless an experimentally verified reason supports another approach.
+
+Do not teleport the player through obstacles or bypass collision to simulate flight.
+
+Expose tunable values for speed, acceleration, drag, hover stability, boost, and camera sensitivity.
+
+Create a small flight test arena first. Do not build the entire city before flight works.
+
+# G. THIRD-PERSON CAMERA
+
+Implement:
+- Smooth chase camera.
+- Adjustable follow distance and height.
+- Camera-relative movement where appropriate.
+- Desktop mouse-look.
+- Android touch-look.
+- Sensitivity settings.
+- Pitch limits.
+- Collision avoidance.
+- Smooth banking and boost transitions.
+- Stable behavior during hover, firing, and landing.
+
+Touching a HUD button must never rotate the camera accidentally.
+
+# H. MOBILE CONTROLS
+
+Use a landscape Android layout with responsive anchors and safe margins.
+
+Required controls:
+- Left virtual joystick.
+- Right-side camera-look area.
+- Ascend.
+- Descend.
+- Boost.
+- Hover.
+- Fire repulsor.
+- Target lock.
+- Brake/land.
+- Pause.
+
+Support simultaneous movement, camera look, and firing.
+
+Correctly manage touch IDs, touch release, focus loss, pause, and resumed gameplay. No stuck buttons or joystick state.
+
+Provide visible pressed states and sufficiently large touch targets.
+
+Desktop mappings:
+- WASD: directional movement.
+- Space: ascend.
+- Ctrl: descend.
+- Shift: boost.
+- Mouse: look.
+- Left mouse: fire.
+- Right mouse: target lock.
+- H: hover.
+- Escape: pause.
+
+Use InputMap actions and keep desktop and Android input paths compatible.
+
+# I. CITY ENVIRONMENT
+
+Build a compact, explorable city containing:
+- Roads and intersections.
+- Buildings of varied heights.
+- Rooftops.
+- Recognizable landmarks.
+- Ground collision.
+- Rooftop landing surfaces.
+- Flight rings and checkpoints.
+- A clear starting location.
+- Distant skyline or background scenery.
+
+Use modular building scenes, instancing, shared materials, simple collision, and distance-based visual simplification where useful.
+
+Avoid expensive geometry, excessive real-time lights, too many unique materials, and unnecessary physics objects.
+
+The world must be explorable without the player falling through the ground, getting trapped in collision, or hitting invisible obstacles.
+
+# J. ARMOR ABILITIES AND REPULSOR COMBAT
+
+Implement:
+- Palm emitters visually attached to the character's hands.
+- Camera-directed aiming.
+- Energy projectiles or raycast attacks.
+- Muzzle flash and blue energy effects.
+- Impact effects.
+- Cooldowns.
+- Suit-energy consumption and recovery.
+- Target selection and target-lock indication.
+- Damageable practice targets.
+- Hit feedback.
+- Cleanup of expired projectiles and effects.
+
+Combat must remain usable while flying. Prevent duplicate damage, firing while paused, and invalid targets.
+
+# K. CHALLENGES AND GAME FLOW
+
+Implement:
+- Main menu.
+- Free-flight mode.
+- Flight-ring checkpoint course.
+- Timed flight challenge.
+- Rooftop landing challenge.
+- Target practice.
+- Score and best-time tracking.
+- Pause and resume.
+- Restart.
+- Challenge completion screen.
+- Return to menu.
+- Recovery/reset-flight control.
+- Settings for camera sensitivity and relevant graphics options.
+
+Use a clear state machine. Paused or menu states must block gameplay input.
+
+Persist settings and challenge records using Godot's appropriate user-data path.
+
+No server, database, online account, or internet connection is required.
+
+# L. MOBILE PERFORMANCE
+
+Start with Godot's Mobile renderer.
+
+Design for stable 30 FPS as a minimum goal and aim for 60 FPS where the phone permits.
+
+Optimize:
+- Geometry and material count.
+- Dynamic lights and shadows.
+- Particle effects.
+- Collision shapes.
+- UI updates.
+- Resource loading.
+- Frequently spawned objects.
+
+Measure actual performance where possible. Do not report FPS figures without measurements.
+
+# M. VALIDATION AND AUTOMATED TESTS
+
+After every major subsystem:
+1. Validate GDScript syntax.
+2. Verify scene paths and resources.
+3. Run headless Godot validation if the executable is available.
+4. Run deterministic logic tests where practical.
+5. Test scene startup and transitions.
+6. Inspect errors and warnings.
+7. Verify input actions and signal connections.
+8. Check restart and cleanup behavior.
+9. Check settings persistence.
+10. Record actual results.
+
+Never claim a test passed unless it ran and produced evidence.
+
+# N. ANDROID EXPORT
+
+Prepare a real Android export configuration where supported.
+
+Document:
+- Required Godot version.
+- Matching export templates.
+- Android SDK and JDK requirements.
+- Application ID.
+- App version.
+- Landscape orientation.
+- Display name and icon.
+- Exact local build and export commands.
+
+Do not commit signing passwords or private keys.
+
+If Replit cannot execute Godot or create a valid APK, deliver the complete source project and precise local build steps. Do not fake an APK or substitute a browser demo.
+
+# O. FINAL DELIVERABLES
+
+Deliver:
+1. Complete native Godot project.
+2. Downloadable project ZIP or Git repository.
+3. Actual APK only if successfully built.
+4. README with exact setup and run instructions.
+5. REFERENCES.md.
+6. LICENSES.md.
+7. Implemented-feature checklist.
+8. Automated validation results.
+9. Known limitations.
+10. Physical-device testing instructions.
+
+# P. EXECUTION ORDER
+
+Execute the work in this exact dependency order:
+
+1. Inspect environment and references.
+2. Create and validate the Godot project.
+3. Build a placeholder flight prototype.
+4. Implement third-person camera and flight physics.
+5. Implement mobile touch controls.
+6. Build and test the first Android APK.
+7. Create/import the detailed armor model.
+8. Implement animations and thruster effects.
+9. Build the compact city.
+10. Add repulsor combat and target practice.
+11. Add flight challenges and menus.
+12. Optimize, validate, export, and document.
+
+Do not skip the first Android build. Do not spend time on detailed assets before proving that the flight prototype works.
+
+Continue implementing all phases that the environment supports. If blocked, report the exact missing dependency and continue with independent tasks.
+
+Start executing now. Do not return only a plan.
